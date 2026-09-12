@@ -363,6 +363,62 @@
   }
   .next-app strong{ color: var(--paper); font-family: var(--serif); font-weight:500; font-size: 1.05rem; }
 
+  /* ---------- ROADMAP ---------- */
+  .roadmap-intro{
+    max-width: 62ch;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-size: 1.02rem;
+    margin: -18px 0 44px;
+  }
+  .roadmap-cols{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  @media (max-width: 780px){ .roadmap-cols{ grid-template-columns: 1fr; gap: 36px; } }
+  .roadmap-col h3{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 0 0 4px;
+  }
+  .roadmap-col .track-note{
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: 0 0 20px;
+  }
+  .roadmap-list{
+    list-style:none;
+    margin:0; padding:0;
+    counter-reset: rm;
+  }
+  .roadmap-list li{
+    counter-increment: rm;
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.96rem;
+  }
+  .roadmap-list li::before{
+    content: counter(rm);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--gold);
+    min-width: 1.4em;
+  }
+  .roadmap-list li.done{ color: var(--teal); font-weight: 500; }
+  .roadmap-list li.done::after{
+    content: "— shipped as Vasooli";
+    font-size: 0.8rem;
+    color: var(--teal);
+    font-style: italic;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
   /* ---------- SKILLS ---------- */
   .skill-cols{
     display:grid;
@@ -534,6 +590,7 @@
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#apps">Apps</a>
+      <a href="#roadmap">Roadmap</a>
       <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
@@ -611,7 +668,7 @@
           <span class="tag">Firebase</span>
         </div>
         <div class="app-links">
-          <a href="#">View repository</a>
+          <a href="https://github.com/amanofficials?tab=repositories">View repository</a>
           <span class="muted">Play Store — coming soon</span>
         </div>
       </article>
@@ -630,7 +687,7 @@
           <span class="tag">Location Services</span>
         </div>
         <div class="app-links">
-          <a href="#">View repository</a>
+          <a href="https://github.com/amanofficials?tab=repositories">View repository</a>
           <span class="muted">Play Store — coming soon</span>
         </div>
       </article>
@@ -639,6 +696,52 @@
     <div class="next-app">
       <span>Next up: <strong>an expense &amp; budget tracker</strong> for freelancers and small shop owners, monetised through ads.</span>
       <span class="muted">In planning</span>
+    </div>
+  </div>
+</section>
+
+<section class="on-paper" id="roadmap">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Roadmap</h2>
+      <span class="count">learning in public</span>
+    </div>
+    <p class="roadmap-intro">I'm working through two parallel project tracks — Android and web — building the same kinds of business apps in both, one level of complexity at a time. Everything ships to GitHub as I go.</p>
+    <div class="roadmap-cols">
+      <div class="roadmap-col">
+        <h3>Android track</h3>
+        <p class="track-note">Kotlin/Java · Room · Retrofit · MVVM</p>
+        <ol class="roadmap-list">
+          <li>Calculator</li>
+          <li>To-Do App</li>
+          <li>Expense Tracker</li>
+          <li>Weather App</li>
+          <li class="done">Khata / Credit Ledger</li>
+          <li>Shop Inventory Manager</li>
+          <li>Pharmacy Management System</li>
+          <li>POS System</li>
+          <li>Real-Time Chat App</li>
+          <li>Business Management Suite</li>
+        </ol>
+      </div>
+      <div class="roadmap-col">
+        <h3>Web track</h3>
+        <p class="track-note">HTML/CSS/JS · REST APIs · full-stack later</p>
+        <ol class="roadmap-list">
+          <li>Portfolio Site</li>
+          <li>Landing Page</li>
+          <li>Calculator</li>
+          <li>To-Do App</li>
+          <li>Expense Tracker</li>
+          <li>Weather Dashboard</li>
+          <li>Admin Dashboard</li>
+          <li>Khata Management</li>
+          <li>Inventory Management</li>
+          <li>CRM</li>
+          <li>POS System</li>
+          <li>E-Commerce Platform</li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
@@ -772,7 +875,7 @@
         </li>
         <li>
           <span class="label">github</span>
-          <a href="#">github.com/yourusername</a>
+          <a href="https://github.com/amanofficials">github.com/amanofficials</a>
         </li>
       </ul>
     </div>
