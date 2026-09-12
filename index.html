@@ -41,6 +41,49 @@
 
   ::selection{ background: var(--gold); color: var(--night-deep); }
 
+  /* ---------- SCROLL PROGRESS + GRAIN ---------- */
+  #scrollProgress{
+    position: fixed; top:0; left:0; height:3px; width:0%;
+    background: linear-gradient(90deg, var(--gold), var(--teal), var(--gold-soft));
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+    z-index: 200;
+  }
+  @keyframes shimmer{ to{ background-position: 200% center; } }
+  body::before{
+    content:"";
+    position: fixed; inset:0;
+    z-index: 150;
+    pointer-events:none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ---------- ABSTRACT BLOBS ---------- */
+  section, .hero{ position:relative; overflow:hidden; }
+  .wrap{ position:relative; z-index:2; }
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter: blur(64px);
+    pointer-events:none;
+    z-index:0;
+    animation: drift 24s ease-in-out infinite;
+  }
+  .blob.gold{ background: radial-gradient(circle at 35% 35%, rgba(199,154,63,0.55), transparent 70%); }
+  .blob.teal{ background: radial-gradient(circle at 35% 35%, rgba(77,122,114,0.5), transparent 70%); }
+  .blob.indigo{ background: radial-gradient(circle at 35% 35%, rgba(70,100,170,0.5), transparent 70%); }
+  @keyframes drift{
+    0%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(34px,-30px) scale(1.1); }
+    100%{ transform: translate(-24px,22px) scale(0.94); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .blob{ animation:none; }
+    #scrollProgress{ animation:none; }
+  }
+
   /* ---------- MOTION ---------- */
   .reveal{
     opacity: 0;
@@ -225,6 +268,34 @@
     color: rgba(243,236,220,0.82);
     margin: 0 0 28px;
   }
+  .role-cycle{
+    color: var(--gold-soft);
+    font-style: normal;
+    display: inline-block;
+    min-width: 1px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .cursor-glow{
+    position:absolute;
+    width: 460px; height: 460px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(199,154,63,0.22), transparent 70%);
+    transform: translate(-50%,-50%);
+    pointer-events:none;
+    opacity:0;
+    transition: opacity 0.4s ease;
+    z-index:0;
+  }
+  .section-head h2{ position:relative; display:inline-block; }
+  .section-head h2::after{
+    content:"";
+    display:block;
+    width:0; height:2px;
+    background: var(--gold);
+    margin-top:8px;
+    transition: width 0.9s cubic-bezier(.2,.7,.3,1) 0.15s;
+  }
+  .section-head.reveal-visible h2::after{ width: 64px; }
   .hero p.lede{
     max-width: 52ch;
     font-size: 1.05rem;
@@ -550,6 +621,16 @@
     margin-bottom: 6px;
     display:block;
   }
+  .t-item .t-tag{
+    font-style: normal;
+    color: var(--teal);
+    background: rgba(77,122,114,0.16);
+    border: 1px solid rgba(77,122,114,0.4);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    margin-left: 8px;
+  }
   .t-item h3{
     font-family: var(--serif);
     font-weight:500;
@@ -647,6 +728,7 @@
 </style>
 </head>
 <body>
+<div id="scrollProgress"></div>
 
 <header class="site-nav">
   <div class="nav-inner">
@@ -678,10 +760,13 @@
       <circle cx="100" cy="100" r="60"/>
     </g>
   </svg>
+  <div class="blob gold" style="width:340px;height:340px;top:-100px;left:60%;"></div>
+  <div class="blob indigo" style="width:280px;height:280px;bottom:-80px;left:-60px;"></div>
+  <div class="cursor-glow" id="heroGlow"></div>
   <div class="wrap">
     <span class="eyebrow-loc">Jamshoro, Sindh, Pakistan</span>
     <h1>Amanullah Panhwar</h1>
-    <p class="role">Android developer &amp; IT educator</p>
+    <p class="role">Currently: <span class="role-cycle" id="roleCycle">Android Developer</span></p>
     <p class="lede">I teach information technology by day and build small, useful Android apps by night — currently two ledger-and-clock tools born out of real problems I kept seeing around me: <strong>Vasooli</strong>, for tuition centres chasing fee dues, and <strong>Waqt</strong>, for keeping prayer times close at hand.</p>
     <div class="hero-actions">
       <a href="#apps" class="btn btn-primary">See the apps</a>
@@ -691,6 +776,7 @@
 </section>
 
 <section class="on-paper" id="about">
+  <div class="blob teal" style="width:260px;height:260px;top:-60px;right:-40px;"></div>
   <div class="wrap">
     <div class="section-head">
       <h2>About</h2>
@@ -713,6 +799,7 @@
 </section>
 
 <section class="on-night" id="apps">
+  <div class="blob gold" style="width:300px;height:300px;top:-80px;right:10%;"></div>
   <div class="wrap">
     <div class="section-head">
       <h2>Apps</h2>
@@ -767,6 +854,7 @@
 </section>
 
 <section class="on-paper" id="roadmap">
+  <div class="blob gold" style="width:240px;height:240px;top:-70px;right:5%;"></div>
   <div class="wrap">
     <div class="section-head">
       <h2>Roadmap</h2>
@@ -813,6 +901,7 @@
 </section>
 
 <section class="on-paper" id="skills">
+  <div class="blob teal" style="width:280px;height:280px;bottom:-90px;left:-50px;"></div>
   <div class="wrap">
     <div class="section-head">
       <h2>Skills</h2>
@@ -858,16 +947,22 @@
 </section>
 
 <section class="on-night" id="experience">
+  <div class="blob indigo" style="width:300px;height:300px;bottom:-100px;left:8%;"></div>
   <div class="wrap">
     <div class="section-head">
       <h2>Experience</h2>
-      <span class="count">2018 — present</span>
+      <span class="count">2014 — present</span>
     </div>
     <div class="timeline">
       <div class="t-item">
         <span class="t-date">Dec 2022 — Present</span>
         <h3>PST, BPS-14</h3>
         <span class="t-org">School Education &amp; Literacy Department (SELD), Sindh</span>
+      </div>
+      <div class="t-item">
+        <span class="t-date">Aug 2014 — Present <em class="t-tag">part-time, evenings</em></span>
+        <h3>Computer Instructor</h3>
+        <span class="t-org">Mass Tech Academy of Computer Science, Bhan Saeedabad</span>
       </div>
       <div class="t-item">
         <span class="t-date">Sep 2020 — Feb 2023</span>
@@ -878,11 +973,6 @@
         <span class="t-date">Jul 2019 — Dec 2019</span>
         <h3>Visiting IT Faculty</h3>
         <span class="t-org">MBBS Campus Dadu, University of Sindh</span>
-      </div>
-      <div class="t-item">
-        <span class="t-date">Aug 2014 — Feb 2020</span>
-        <h3>Computer Instructor</h3>
-        <span class="t-org">Mass Tech Academy</span>
       </div>
       <div class="t-item">
         <span class="t-date">May — Jul 2018</span>
@@ -986,6 +1076,57 @@
     revealEls.forEach(function(el){ io.observe(el); });
   } else {
     revealEls.forEach(function(el){ el.classList.add('reveal-visible'); });
+  }
+
+  // scroll progress bar
+  var progressBar = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  }, { passive: true });
+
+  // rotating role text
+  var roles = ['Android Developer', 'IT Educator', 'App Builder', 'Lifelong Learner'];
+  var roleEl = document.getElementById('roleCycle');
+  if (roleEl && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var ri = 0;
+    setInterval(function(){
+      ri = (ri + 1) % roles.length;
+      roleEl.style.opacity = 0;
+      roleEl.style.transform = 'translateY(6px)';
+      setTimeout(function(){
+        roleEl.textContent = roles[ri];
+        roleEl.style.opacity = 1;
+        roleEl.style.transform = 'translateY(0)';
+      }, 380);
+    }, 2800);
+  }
+
+  // cursor glow in hero
+  var heroSection = document.querySelector('.hero');
+  var heroGlow = document.getElementById('heroGlow');
+  if (heroSection && heroGlow && window.matchMedia('(hover: hover)').matches){
+    heroSection.addEventListener('mousemove', function(e){
+      var rect = heroSection.getBoundingClientRect();
+      heroGlow.style.left = (e.clientX - rect.left) + 'px';
+      heroGlow.style.top = (e.clientY - rect.top) + 'px';
+      heroGlow.style.opacity = 1;
+    });
+    heroSection.addEventListener('mouseleave', function(){ heroGlow.style.opacity = 0; });
+  }
+
+  // magnetic buttons
+  if (window.matchMedia('(hover: hover)').matches){
+    document.querySelectorAll('.btn').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width / 2;
+        var y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = 'translate(' + (x * 0.18) + 'px,' + (y * 0.35) + 'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
+    });
   }
 </script>
 
